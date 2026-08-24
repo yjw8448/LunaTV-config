@@ -14,15 +14,18 @@ jobs:
     runs-on: ubuntu-latest
     if: ${{ github.event.repository.fork }}
 
+    env:
+      FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+
     steps:
       # Step 1: run a standard checkout action
       - name: Checkout target repo
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       # Step 2: run the sync action
       - name: Sync upstream changes
         id: sync
-        uses: aormsby/Fork-Sync-With-Upstream-action@v3.4
+        uses: aormsby/Fork-Sync-With-Upstream-action@v3.4.3
         with:
           upstream_sync_repo: hafrey1/LunaTV-config
           upstream_sync_branch: main
@@ -41,7 +44,7 @@ jobs:
           
       - name: Delete workflow runs
       # 删除工作流记录/只保留1天记录
-        uses: Mattraks/delete-workflow-runs@main
+        uses: Mattraks/delete-workflow-runs@v2
         with:
           retain_days: 0
           keep_minimum_runs: 5
